@@ -20,6 +20,8 @@ export const ourFileRouter = {
       if (!user.userId) throw new UploadThingError("Unauthorized");
 
       console.info("middleware");
+      console.info(user);
+      console.info(user.userId);
       //Sentry.captureMessage("Teste1", "info");
 
       // Whatever is returned here is accessible in onUploadComplete as `metadata`
