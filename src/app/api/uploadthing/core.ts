@@ -19,16 +19,18 @@ export const ourFileRouter = {
       // If you throw, the user will not be able to upload
       if (!user.userId) throw new UploadThingError("Unauthorized");
 
-      console.info("teste1");
-      Sentry.captureMessage("Teste1", "info");
+      console.info("middleware");
+      //Sentry.captureMessage("Teste1", "info");
 
       // Whatever is returned here is accessible in onUploadComplete as `metadata`
       return { userId: user.userId };
     })
     .onUploadComplete(async ({ metadata, file }) => {     
       
-      console.info("teste2");
-      Sentry.captureMessage("Teste2", "info");
+      console.info("onUploadComplete");
+      console.info(metadata);
+      console.info(file);
+      //Sentry.captureMessage("Teste2", "info");
 
       try {
         await db.insert(images).values({
@@ -38,9 +40,11 @@ export const ourFileRouter = {
         })  
       } catch (error) {
         console.error(error);
-        Sentry.captureException(error);        
+        //Sentry.captureException(error);        
       }
             
+      console.info("OK");
+
       return { uploadedBy: metadata.userId };
     }),
 } satisfies FileRouter;
